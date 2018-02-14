@@ -1,5 +1,5 @@
 # serilog-elstic-test
-Test of Serilog + Elastic Search using
+Test of Serilog + Elastic Search
 
 ## Configuration ##
 
