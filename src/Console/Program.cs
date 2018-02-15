@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Reflection;
-using BenchmarkDotNet.Running;
 
 namespace RuslanSh.SerilogElasticTest.ConsoleClient
 {
@@ -8,11 +6,23 @@ namespace RuslanSh.SerilogElasticTest.ConsoleClient
 	{
 		private static void Main(string[] args)
 		{
-			var benchmarkSummary = BenchmarkRunner.Run<BenchmarkLogger>();
-			//var logger = new BenchmarkLogger();
-			//logger.LogToFile();
-			//logger.LogToElastic();
-			//logger.LogToRabbit();
+			var logger = new BenchmarkLogger();
+			var n = 100000;
+			//Benchmark(n, logger.LogToFile, "Log to File");
+			//Benchmark(n, logger.LogToElastic, "Log to Elastic");
+			Benchmark(n, logger.LogToRabbit, "Log to Rabbit");
+			Console.ReadKey();
+		}
+
+		private static void Benchmark(int n, Action action, string actionName)
+		{
+			var startDate = DateTime.Now;
+			for (int i = 0; i < n; i++)
+			{
+				action.Invoke();
+			}
+			var delta = DateTime.Now - startDate;
+			Console.WriteLine($"{actionName} {n}: {delta}");
 		}
 	}
 }
